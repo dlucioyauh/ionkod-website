@@ -1,100 +1,89 @@
-import Image from "next/image";
+'use client';
+
+import React, { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  useEffect(() => {
+    const image = document.querySelector(".moving-image");
+    if (image) {
+      image.style.animation = "moveImage 10s infinite";
+    }
+  }, []);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+  return (
+    <div>
+      <header className="bg-black bg-opacity-60 p-4 sticky top-0 flex justify-between items-center">
+        <h1 className="text-white font-bold text-lg">IonKod</h1>
+        <nav>
+          <ul className="flex gap-4">
+            <li><a href="#sobre" className="text-white hover:text-yellow-400">Sobre</a></li>
+            <li><a href="#servicos" className="text-white hover:text-yellow-400">Serviços</a></li>
+            <li><a href="#curso" className="text-white hover:text-yellow-400">Curso</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div className="image-container">
+        <img src="/loop.png" alt="Loop Image" className="moving-image" />
+      </div>
+
+      <main>
+        <section className="hero text-center py-20">
+          <h2 className="text-4xl text-white font-bold mb-4">Bem-vindo à IonKod</h2>
+          <p className="text-lg text-white mb-6">
+            Transformando ideias em soluções tecnológicas inovadoras.
+          </p>
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#curso"
+            className="bg-yellow-400 text-black px-4 py-2 rounded hover:scale-105 transition-transform"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            Saiba Mais
           </a>
+        </section>
+
+        <section id="sobre" className="py-10 px-4 text-center bg-gray-800 text-white">
+          <h3 className="text-3xl font-bold mb-4">Sobre Nós</h3>
+          <p className="text-lg">
+            A IonKod é uma empresa que visa transformar o mundo por meio de tecnologia
+            moderna e acessível, criando oportunidades e soluções para empresas e
+            indivíduos.
+          </p>
+        </section>
+
+        <section id="servicos" className="py-10 px-4 text-center">
+          <h3 className="text-3xl font-bold mb-4">Nossos Serviços</h3>
+          <ul className="list-none">
+            <li className="bg-white bg-opacity-10 text-white p-4 mb-2 rounded">
+              Desenvolvimento de Sites
+            </li>
+            <li className="bg-white bg-opacity-10 text-white p-4 mb-2 rounded">
+              Aplicativos Móveis
+            </li>
+            <li className="bg-white bg-opacity-10 text-white p-4 mb-2 rounded">
+              Soluções de E-commerce
+            </li>
+            <li className="bg-white bg-opacity-10 text-white p-4 mb-2 rounded">
+              Consultoria Tecnológica
+            </li>
+          </ul>
+        </section>
+
+        <section id="curso" className="py-10 px-4 text-center bg-gray-800 text-white">
+          <h3 className="text-3xl font-bold mb-4">Curso Exclusivo</h3>
+          <p className="text-lg mb-6">
+            Adquira conhecimento prático e transforme sua carreira.
+          </p>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#"
+            className="bg-green-500 px-4 py-2 rounded text-white hover:bg-green-400"
           >
-            Read our docs
+            Faça o Download Agora
           </a>
-        </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="text-center py-4 bg-black text-white">
+        <p>&copy; 2024 IonKod. Todos os direitos reservados.</p>
       </footer>
     </div>
   );

@@ -1,21 +1,134 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html, body {
+  height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Corpo */
 body {
-  color: var(--foreground);
-  background: var(--background);
+  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+  background-color: #000;  /* Fundo escuro */
+  backdrop-filter: brightness(0.7);
+}
+
+/* Hero Section */
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;  /* Herda cor do pai */
+  transition: all 0.3s; /* Adiciona transição global */
+}
+
+a:hover {
+  text-decoration: underline;
+  transform: scale(1.05); /* Suaviza o hover */
+}
+
+/* Seções */
+section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Header */
+header {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Footer */
+footer {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.9rem;
+}
+
+/* Movimentação com hover */
+.movable {
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+}
+
+.movable:hover {
+  transform: translate(10px, -10px) rotate(5deg);
+}
+
+/* Animação da imagem */
+.image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;  /* Previne interações */
+}
+
+.moving-image {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+  animation: move 10s linear infinite;
+}
+
+/* Animação de movimento */
+@keyframes move {
+  0% { transform: translate(-50%, -50%) rotate(0deg) translateY(-50px); }
+  25% { transform: translate(-50%, -50%) rotate(90deg) translateY(50px); }
+  50% { transform: translate(-50%, -50%) rotate(180deg) translateY(-50px); }
+  75% { transform: translate(-50%, -50%) rotate(270deg) translateY(50px); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateY(-50px); }
+}
+
+/* Hover na imagem */
+.image-container:hover .moving-image {
+  animation: none;
+  transform: scale(1.5) rotate(180deg);
+  opacity: 0.8;
+}
+
+@keyframes moveImage {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
 }
