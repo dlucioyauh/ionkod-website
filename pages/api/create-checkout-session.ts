@@ -37,8 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: `${req.headers.origin}/confirmation`,
-      cancel_url: `${req.headers.origin}/payment`,
+      success_url: `${req.headers.origin}/payment`, // Altere para a nova URL /payment
+      cancel_url: `${req.headers.origin}/cancel`, // Certifique-se de que a URL de cancelamento também exista
     });
 
     res.status(200).json({ id: session.id });
