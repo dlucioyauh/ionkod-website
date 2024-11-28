@@ -1,5 +1,6 @@
+// src/components/CheckoutButton.tsx
 import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';  // Corrigir a importação
+import { loadStripe } from '@stripe/stripe-js';
 
 const CheckoutButton = () => {
   const [loading, setLoading] = useState(false);

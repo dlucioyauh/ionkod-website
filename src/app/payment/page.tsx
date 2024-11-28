@@ -1,7 +1,7 @@
-// src/app/payment.tsx
+// src/app/payment/page.tsx
 'use client';
 
-import CheckoutButton from '../../components/CheckoutButton';
+import CheckoutButton from '../../components/CheckoutButton'; // Certifique-se de importar o botão corretamente
 import React from 'react';
 
 const PaymentPage = () => {

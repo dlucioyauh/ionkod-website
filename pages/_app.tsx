@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import '../app/globals.css';
+import { AppProps } from 'next/app'; // Importando o tipo correto
+import '../src/app/globals.css';
 
-function MyApp({ Component, pageProps }: any) {
+function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // Carrega o script Stripe
     const script = document.createElement('script');

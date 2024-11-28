@@ -2,6 +2,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
+// Definir o tipo para os itens do corpo da requisição
+interface Item {
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 // Atualize a versão da API do Stripe aqui
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2024-11-20.acacia', // A versão mais recente compatível
@@ -15,11 +22,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { items } = req.body;
+    // Tipando o corpo da requisição como um array de itens
+    const { items }: { items: Item[] } = req.body;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: items.map((item: any) => ({
+      line_items: items.map((item) => ({
         price_data: {
           currency: 'usd',
           product_data: {
