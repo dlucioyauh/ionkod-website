@@ -7,11 +7,9 @@ const DownloadButton = () => {
     setLoading(true);
 
     try {
-      // Faz a requisição para verificar se o pagamento foi confirmado e obter o PDF
       const response = await fetch('/api/get-pdf');
 
       if (response.status === 200) {
-        // Se o pagamento foi confirmado, inicia o download
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -22,7 +20,7 @@ const DownloadButton = () => {
       } else {
         alert('Você precisa pagar para acessar o PDF.');
       }
-    } catch (error) {
+    } catch {
       alert('Erro ao tentar baixar o PDF. Tente novamente.');
     }
 
