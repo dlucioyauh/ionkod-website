@@ -10,7 +10,7 @@ const CheckoutButton = () => {
 
     // Definindo os itens que o usuário está comprando
     const items = [
-      { name: 'Produto de Exemplo', price: 25, quantity: 1 }, // 25 centavos = 0.25 BRL
+      { name: 'Produto de Exemplo', price: 50, quantity: 1 }, // 50 centavos = 0.50 BRL
     ];
 
     // Faz a requisição para criar a sessão de checkout

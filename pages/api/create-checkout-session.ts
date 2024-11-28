@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           product_data: {
             name: item.name,
           },
-          unit_amount: item.price, // 25 centavos = 25
+          unit_amount: item.price, // 50 centavos = 50
         },
         quantity: item.quantity,
       })),
