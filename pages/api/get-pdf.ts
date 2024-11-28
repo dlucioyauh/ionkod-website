@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.setHeader('Content-Disposition', 'attachment; filename=Aula+01+Inaugural.pdf');
       res.send(file);
       
-    } catch (error) {
+    } catch (err) {
       res.status(500).json({ error: 'Erro ao processar o pedido. Tente novamente mais tarde.' });
     }
   } else {
