@@ -1,13 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
+// Inicializando a instância do Stripe com a versão correta da API
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2022-11-15',
+  apiVersion: '2024-10-28.acacia', // Versão compatível da API
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
+      // Definir o siteUrl a partir da variável de ambiente ou URL local
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+      // Criando uma sessão de checkout com o Stripe
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: [
@@ -23,12 +28,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         ],
         mode: 'payment',
-        success_url: `${req.headers.origin}/confirmation`,
-        cancel_url: `${req.headers.origin}/payment`,
+        success_url: `${siteUrl}/confirmation`,
+        cancel_url: `${siteUrl}/payment`,
       });
 
+      // Retornando o ID da sessão de checkout
       res.status(200).json({ id: session.id });
     } catch (err: any) {
+      // Retornando erro, caso ocorra
       res.status(500).json({ error: err.message });
     }
   } else {
