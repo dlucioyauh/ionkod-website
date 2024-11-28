@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             product_data: {
               name: 'Curso Exclusivo IonKod',  // Nome do curso
             },
-            unit_amount: 200, // Valor em centavos (R$2,00)
+            unit_amount: 50, // Valor em centavos (R$0,50)
           },
           quantity: 1,
         },
