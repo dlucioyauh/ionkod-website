@@ -1,16 +1,18 @@
+// pages/api/create-checkout-session.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-11-20.acacia',
-});
-
-// Definindo o tipo para os itens de checkout
+// Definir o tipo para os itens do corpo da requisição
 interface Item {
   name: string;
   price: number;
   quantity: number;
 }
+
+// Atualize a versão da API do Stripe aqui
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2024-11-20.acacia', // A versão mais recente compatível
+});
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -20,7 +22,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // Tipando o corpo da requisição como um array de itens
     const { items }: { items: Item[] } = req.body;
 
     const session = await stripe.checkout.sessions.create({
@@ -36,11 +37,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: `${req.headers.origin}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${req.headers.origin}/confirmation`,
       cancel_url: `${req.headers.origin}/payment`,
     });
 
-    res.status(200).json({ id: session.id }); // Retorna o ID da sessão
+    res.status(200).json({ id: session.id });
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });
   }
