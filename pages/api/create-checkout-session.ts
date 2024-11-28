@@ -5,7 +5,7 @@ import Stripe from 'stripe';
 // Definir o tipo para os itens do corpo da requisição
 interface Item {
   name: string;
-  price: number;
+  price: number; // O preço será em centavos (em reais)
   quantity: number;
 }
 
@@ -28,11 +28,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       payment_method_types: ['card'],
       line_items: items.map((item) => ({
         price_data: {
-          currency: 'usd',
+          currency: 'brl', // Mudamos para BRL (Real Brasileiro)
           product_data: {
             name: item.name,
           },
-          unit_amount: item.price * 100, // Preço em centavos
+          unit_amount: item.price, // 50 centavos = 50
         },
         quantity: item.quantity,
       })),
