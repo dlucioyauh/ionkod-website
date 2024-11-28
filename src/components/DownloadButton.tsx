@@ -1,4 +1,3 @@
-// src/components/DownloadButton.tsx
 import { useState } from 'react';
 
 const DownloadButton = () => {
@@ -7,20 +6,24 @@ const DownloadButton = () => {
   const handleDownload = async () => {
     setLoading(true);
 
-    // Faz a requisição para a API que verifica se o pagamento foi realizado
-    const response = await fetch('/api/get-pdf');
-    
-    if (response.status === 200) {
-      // Se o pagamento foi confirmado, inicia o download
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Aula+01+Inaugural.pdf';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } else {
-      alert('Você precisa pagar para acessar o PDF.');
+    try {
+      // Faz a requisição para verificar se o pagamento foi confirmado e obter o PDF
+      const response = await fetch('/api/get-pdf');
+
+      if (response.status === 200) {
+        // Se o pagamento foi confirmado, inicia o download
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Aula+01+Inaugural.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        alert('Você precisa pagar para acessar o PDF.');
+      }
+    } catch (error) {
+      alert('Erro ao tentar baixar o PDF. Tente novamente.');
     }
 
     setLoading(false);

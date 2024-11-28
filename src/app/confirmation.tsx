@@ -1,4 +1,3 @@
-// src/app/confirmation.tsx
 import DownloadButton from '../components/DownloadButton';
 
 const Confirmation = () => {
