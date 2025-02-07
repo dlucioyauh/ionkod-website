@@ -1,29 +1,22 @@
 "use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { fadeIn, slideIn } from "@/utils/animations";
 
 const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="menu">
-        <nav>
-          <ul>
-            <li><Link href="#home">Início</Link></li>
-            <li><Link href="#sobre">Sobre</Link></li>
-            <li><Link href="#cursos">Cursos</Link></li>
-            <li><Link href="#contato">Contato</Link></li>
-          </ul>
-        </nav>
-      </header>
-
-      <section className="hero">
+      {/* Seção Hero com fade-in */}
+      <motion.section className="hero" initial="hidden" animate="visible" variants={fadeIn}>
         <h1>Bem-vindo ao <span>IonKod!</span></h1>
         <p>Adquira conhecimento prático e transforme sua carreira.</p>
         <Link href="/payment" className="btn">Adquirir Curso</Link>
-      </section>
+      </motion.section>
 
-      <footer>
+      {/* Rodapé com fade-in */}
+      <motion.footer initial="hidden" animate="visible" variants={fadeIn}>
         <p>&copy; 2024 IonKod. Todos os direitos reservados.</p>
-      </footer>
+      </motion.footer>
     </div>
   );
 };
