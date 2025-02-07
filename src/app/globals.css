@@ -103,3 +103,42 @@ footer {
 .menu ul li a:hover {
     color: #71a3c1;
 }
+
+/* Definir a imagem de fundo para a página principal */
+.homepage {
+    background: url('/images/Imagemdefundo.webp') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgb(252, 248, 248);
+}
+
+.servicos-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #1f2937, #71a3c1);
+    color: white;
+}
+
+.btn {
+    background: #71a3c1;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #1f2937;
+}
