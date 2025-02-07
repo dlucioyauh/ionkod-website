@@ -2,10 +2,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Importa o SDK do Mercado Pago
-const MercadoPago = require('mercadopago');
+const mercadopago = require('mercadopago');
 
 // Configura o Mercado Pago
-MercadoPago.configure({
+mercadopago.configure({
   access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN!,
 });
 
@@ -16,7 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { pacote, valor } = req.body;
 
-  // Cria a preferência de pagamento
+  console.log('Dados recebidos:', { pacote, valor }); // Log dos dados recebidos
+  console.log('Token de acesso:', process.env.MERCADO_PAGO_ACCESS_TOKEN);
+  console.log('Preferência de pagamento:', preference);
   const preference = {
     items: [
       {
@@ -26,24 +28,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     ],
     payment_methods: {
-      installments: 12, // Número máximo de parcelas
-      default_installments: 1, // Número padrão de parcelas
+      installments: 12,
+      default_installments: 1,
     },
     back_urls: {
       success: `${process.env.NEXT_PUBLIC_SITE_URL}/confirmation`,
       failure: `${process.env.NEXT_PUBLIC_SITE_URL}/payment`,
       pending: `${process.env.NEXT_PUBLIC_SITE_URL}/payment`,
     },
-    auto_return: 'approved', // Redireciona automaticamente após pagamento aprovado
-    statement_descriptor: 'IONKOD CONSULTORIA', // Nome que aparece na fatura do cartão
+    auto_return: 'approved',
+    statement_descriptor: 'IONKOD CONSULTORIA',
   };
 
   try {
-    // Cria a preferência no Mercado Pago
-    const response = await MercadoPago.preferences.create(preference);
+    console.log('Criando preferência de pagamento...'); // Log antes de criar a preferência
+    const response = await mercadopago.preferences.create(preference);
+    console.log('Resposta do Mercado Pago:', response); // Log da resposta
     res.status(200).json({ id: response.body.id });
   } catch (error) {
-    console.error('Erro ao criar preferência de pagamento:', error);
+    console.error('Erro ao criar preferência de pagamento:', error); // Log de erro
     res.status(500).json({ error: 'Erro ao processar o pagamento' });
   }
 }
