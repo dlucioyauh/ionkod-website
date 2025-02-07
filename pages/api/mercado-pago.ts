@@ -1,13 +1,11 @@
 // pages/api/mercado-pago.ts
 import { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
 
-// Importa o SDK do Mercado Pago
-const mercadopago = require('mercadopago');
-
-// Configura o Mercado Pago
-mercadopago.configure({
-  access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN!,
-});
+// Define o tipo da resposta da API do Mercado Pago
+interface MercadoPagoResponse {
+  id: string;
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -17,8 +15,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { pacote, valor } = req.body;
 
   console.log('Dados recebidos:', { pacote, valor }); // Log dos dados recebidos
-  console.log('Token de acesso:', process.env.MERCADO_PAGO_ACCESS_TOKEN);
-  console.log('Preferência de pagamento:', preference);
+
+  // Valida os dados recebidos
+  if (!pacote || typeof pacote !== 'string' || pacote.trim() === '') {
+    return res.status(400).json({ error: 'O campo "pacote" é obrigatório e não pode estar vazio.' });
+  }
+
+  if (isNaN(valor) || parseFloat(valor) <= 0) {
+    return res.status(400).json({ error: 'O campo "valor" deve ser um número maior que zero.' });
+  }
+
   const preference = {
     items: [
       {
@@ -40,13 +46,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     statement_descriptor: 'IONKOD CONSULTORIA',
   };
 
+  console.log('Preferência de pagamento:', preference); // Log da preferência de pagamento
+
   try {
-    console.log('Criando preferência de pagamento...'); // Log antes de criar a preferência
-    const response = await mercadopago.preferences.create(preference);
-    console.log('Resposta do Mercado Pago:', response); // Log da resposta
-    res.status(200).json({ id: response.body.id });
+    const response = await axios.post<MercadoPagoResponse>(
+      'https://api.mercadopago.com/checkout/preferences',
+      preference,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    console.log('Resposta do Mercado Pago:', response.data); // Log da resposta
+    res.status(200).json({ id: response.data.id });
   } catch (error) {
-    console.error('Erro ao criar preferência de pagamento:', error); // Log de erro
+    const err = error as any;
+    console.error('Erro ao criar preferência de pagamento:', err.response?.data || err.message); // Log detalhado do erro
     res.status(500).json({ error: 'Erro ao processar o pagamento' });
   }
 }

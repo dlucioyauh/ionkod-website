@@ -4,6 +4,13 @@
 const CheckoutButton = ({ pacote, valor }: { pacote: string; valor: number }) => {
   const handlePayment = async () => {
     try {
+      // Verifica se os dados estão corretos
+      if (!pacote || valor <= 0) {
+        alert('Por favor, selecione um pacote válido.');
+        return;
+      }
+
+      // Envia os dados para a API
       const response = await fetch('/api/mercado-pago', {
         method: 'POST',
         headers: {
@@ -12,7 +19,15 @@ const CheckoutButton = ({ pacote, valor }: { pacote: string; valor: number }) =>
         body: JSON.stringify({ pacote, valor }),
       });
 
+      // Verifica se a resposta foi bem-sucedida
+      if (!response.ok) {
+        throw new Error('Erro ao processar o pagamento.');
+      }
+
+      // Extrai o ID da preferência de pagamento
       const { id } = await response.json();
+
+      // Redireciona para o checkout do Mercado Pago
       window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?preference-id=${id}`;
     } catch (error) {
       console.error('Erro ao processar o pagamento:', error);
