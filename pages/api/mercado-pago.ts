@@ -1,6 +1,5 @@
-// pages/api/mercado-pago.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios'; // Importação correta
 
 // Define o tipo da resposta da API do Mercado Pago
 interface MercadoPagoResponse {
@@ -63,8 +62,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('Resposta do Mercado Pago:', response.data); // Log da resposta
     res.status(200).json({ id: response.data.id });
   } catch (error) {
-    const err = error as any;
-    console.error('Erro ao criar preferência de pagamento:', err.response?.data || err.message); // Log detalhado do erro
+    // Define o tipo do erro como AxiosError
+    const axiosError = error as AxiosError;
+    console.error('Erro ao criar preferência de pagamento:', axiosError.response?.data || axiosError.message); // Log detalhado do erro
     res.status(500).json({ error: 'Erro ao processar o pagamento' });
   }
 }
