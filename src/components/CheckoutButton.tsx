@@ -1,63 +1,31 @@
 // src/components/CheckoutButton.tsx
-import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
+'use client';
 
-const CheckoutButton = () => {
-  const [loading, setLoading] = useState(false);
+const CheckoutButton = ({ pacote, valor }: { pacote: string; valor: number }) => {
+  const handlePayment = async () => {
+    try {
+      const response = await fetch('/api/mercado-pago', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pacote, valor }),
+      });
 
-  const handleCheckout = async () => {
-    setLoading(true);
-
-    // Definindo os itens que o usuário está comprando
-    const items = [
-      { name: 'Produto de Exemplo', price: 50, quantity: 1 }, // 50 centavos = 0.50 BRL
-    ];
-
-    // Faz a requisição para criar a sessão de checkout
-    const response = await fetch('/api/create-checkout-session', {
-      method: 'POST',
-      body: JSON.stringify({ items }), // Envie os itens para a criação da sessão
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const session = await response.json();
-
-    if (session.error) {
-      console.error('Erro ao criar a sessão:', session.error);
-      setLoading(false);
-      return;
+      const { id } = await response.json();
+      window.location.href = `https://www.mercadopago.com.br/checkout/v1/redirect?preference-id=${id}`;
+    } catch (error) {
+      console.error('Erro ao processar o pagamento:', error);
+      alert('Erro ao processar o pagamento. Tente novamente.');
     }
-
-    // Inicializa o Stripe com a chave pública
-    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
-
-    if (!stripe) {
-      console.error('Falha ao inicializar o Stripe!');
-      setLoading(false);
-      return;
-    }
-
-    // Redireciona para o Stripe Checkout
-    const { error } = await stripe.redirectToCheckout({
-      sessionId: session.id, // Passe o sessionId que você recebeu da sua API
-    });
-
-    if (error) {
-      console.error('Error:', error);
-    }
-
-    setLoading(false);
   };
 
   return (
     <button
-      onClick={handleCheckout}
-      disabled={loading}
-      className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg"
+      onClick={handlePayment}
+      className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
     >
-      {loading ? 'Processando...' : 'Pagar Agora'}
+      Pagar com Mercado Pago
     </button>
   );
 };
