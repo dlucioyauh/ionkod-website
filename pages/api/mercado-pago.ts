@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Define o tipo da resposta da API do Mercado Pago
 interface MercadoPagoResponse {
-  id: string;
+  init_point: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -54,7 +54,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     );
 
-    res.status(200).json({ id: response.data.id });
+    // Retorna o link de pagamento (init_point)
+    res.status(200).json({ init_point: response.data.init_point });
   } catch (error: any) {
     console.error('Erro ao criar preferência de pagamento:', error.response?.data || error.message);
     res.status(500).json({ error: 'Erro ao processar o pagamento' });
