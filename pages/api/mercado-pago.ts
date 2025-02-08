@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import axios, { AxiosError } from 'axios'; // Correção da importação
+import axios from 'axios';
+import type { AxiosError } from 'axios';
 
 // Define o tipo da resposta da API do Mercado Pago
 interface MercadoPagoResponse {
