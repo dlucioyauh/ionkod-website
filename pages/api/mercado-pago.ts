@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
-import type { AxiosError } from 'axios';
 
 // Define o tipo da resposta da API do Mercado Pago
 interface MercadoPagoResponse {
@@ -14,9 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { pacote, valor } = req.body;
 
-  console.log('Dados recebidos:', { pacote, valor }); // Log dos dados recebidos
-
-  // Valida os dados recebidos
   if (!pacote || typeof pacote !== 'string' || pacote.trim() === '') {
     return res.status(400).json({ error: 'O campo "pacote" é obrigatório e não pode estar vazio.' });
   }
@@ -46,8 +42,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     statement_descriptor: 'IONKOD CONSULTORIA',
   };
 
-  console.log('Preferência de pagamento:', preference); // Log da preferência de pagamento
-
   try {
     const response = await axios.post<MercadoPagoResponse>(
       'https://api.mercadopago.com/checkout/preferences',
@@ -60,11 +54,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     );
 
-    console.log('Resposta do Mercado Pago:', response.data); // Log da resposta
     res.status(200).json({ id: response.data.id });
-  } catch (error) {
-    const axiosError = error as AxiosError;
-    console.error('Erro ao criar preferência de pagamento:', axiosError.response?.data || axiosError.message); // Log detalhado do erro
+  } catch (error: any) {
+    console.error('Erro ao criar preferência de pagamento:', error.response?.data || error.message);
     res.status(500).json({ error: 'Erro ao processar o pagamento' });
   }
 }
