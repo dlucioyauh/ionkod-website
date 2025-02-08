@@ -1,41 +1,35 @@
 // src/pages/api/webhook.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
+  if (req.method === 'POST') {
+    const { data } = req.body;
+    const paymentId = data.id;
 
-  try {
-    const event = req.body;
-    console.log('Recebido webhook:', event);
+    try {
+      // Fazendo a consulta do pagamento utilizando a API do Mercado Pago
+      const response = await axios.get(
+        `https://api.mercadopago.com/v1/payments/${paymentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
+          },
+        }
+      );
 
-    if (event.type === 'payment') {
-      const paymentId = event.data.id;
-      console.log(`Pagamento recebido: ID ${paymentId}`);
+      // A resposta da API contém as informações do pagamento
+      const payment = response.data;
 
-      // Consulta o Mercado Pago para obter os detalhes do pagamento
-      const { data } = await axios.get(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
-        headers: {
-          Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
-        },
-      });
-
-      console.log('Detalhes do pagamento:', data);
-
-      // Atualiza o banco de dados com o status do pagamento
-      if (data.status === 'approved') {
-        console.log(`Pagamento ${paymentId} aprovado!`);
-        // Aqui você pode salvar no banco de dados que o pagamento foi concluído
-      } else {
-        console.log(`Pagamento ${paymentId} com status: ${data.status}`);
-      }
+      console.log('Pagamento encontrado:', payment);
+      
+      // Aqui você pode continuar o processamento conforme necessário
+      res.status(200).json({ message: 'Pagamento encontrado', payment });
+    } catch (error: any) {
+      console.error('Erro ao buscar pagamento:', error.response?.data || error.message);
+      res.status(500).json({ error: 'Erro ao buscar pagamento' });
     }
-
-    res.status(200).send('OK');
-  } catch (error: any) {
-    console.error('Erro no webhook:', error.response?.data || error.message);
-    res.status(500).json({ error: 'Erro interno do servidor' });
+  } else {
+    res.status(405).json({ error: 'Método não permitido' });
   }
 }
