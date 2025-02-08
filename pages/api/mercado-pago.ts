@@ -1,4 +1,4 @@
-// src/pages/api/mercado-pago.ts
+// pages/api/mercado-pago.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
