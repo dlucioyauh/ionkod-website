@@ -1,16 +1,13 @@
 // src/components/CheckoutButton.tsx
 'use client';
 
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
 const CheckoutButton = ({ pacote, valor }: { pacote: string; valor: number }) => {
   const handlePayment = async () => {
     try {
-      // Verifica se os dados estão corretos
-      if (!pacote || valor <= 0) {
-        alert('Por favor, selecione um pacote válido.');
-        return;
-      }
-
-      // Envia os dados para a API
+      // Envia os dados para a API do Mercado Pago
       const response = await fetch('/api/mercado-pago', {
         method: 'POST',
         headers: {
@@ -36,12 +33,12 @@ const CheckoutButton = ({ pacote, valor }: { pacote: string; valor: number }) =>
   };
 
   return (
-    <button
-      onClick={handlePayment}
-      className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
-    >
-      Pagar com Mercado Pago
-    </button>
+    <motion.div className="mt-5" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+      <button onClick={handlePayment} className="btn flex items-center gap-2">
+        <Image src="/images/passarinho.png" alt="Símbolo" width={30} height={30} />
+        Adquira a Consultoria
+      </button>
+    </motion.div>
   );
 };
 
