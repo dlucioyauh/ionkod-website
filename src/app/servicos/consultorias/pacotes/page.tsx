@@ -54,7 +54,7 @@ const ServiceOptions = () => {
   ];
 
   const optionalExtras = [
-    { name: "E-book de Receitas-Base Saudáveis", price: 100 }, // R$ 197 em centavos
+    { name: "E-book de Receitas-Base Saudáveis", price: 19700 }, // R$ 197 em centavos
     { name: "Auditoria de Redes Sociais", price: 28700 }, // R$ 287 em centavos
     { name: "Mentoria privada", price: 18700 }, // R$ 187 em centavos
   ];
