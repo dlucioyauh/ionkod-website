@@ -12,7 +12,8 @@ const ServiceOptions = () => {
   const services = [
     {
       title: "Plano A. Estratégia Inicial",
-      price: 118700, // R$ 1187, em centavos
+      originalPrice: 148900, // R$ 1489 em centavos
+      price: 118700, // R$ 1187 em centavos (promoção)
       description: [
         "2 sessões de 1h cada (online)",
         "Diagnóstico inicial do negócio do cliente",
@@ -26,7 +27,7 @@ const ServiceOptions = () => {
     },
     {
       title: "Intermediário: Potencializador de Resultados",
-      price: 248900, // R$ 2489, em centavos
+      price: 248900, // R$ 2489 em centavos
       description: [
         "3 sessões de 1h30 cada (online)",
         "Tudo do Pacote Básico +",
@@ -39,7 +40,7 @@ const ServiceOptions = () => {
     },
     {
       title: "Pacote Premium: Transformação Completa",
-      price: 489700, // R$ 4897, em centavos
+      price: 489700, // R$ 4897 em centavos
       description: [
         "4 sessões de 2h cada online (Presencial valor a parte)",
         "Tudo do Pacote Intermediário +",
@@ -54,8 +55,8 @@ const ServiceOptions = () => {
   ];
 
   const optionalExtras = [
-    { name: "Cookbook de Receitas-Base Saudáveis", price: 25700 }, // R$ 197 em centavos
-    { name: "Auditoria Instagram", price: 19700 }, // R$ 287 em centavos
+    { name: "Cookbook de Receitas-Base Saudáveis", price: 25700 }, // R$ 257 em centavos
+    { name: "Auditoria Instagram", price: 19700 }, // R$ 197 em centavos
     { name: "Mentoria privada. A partir de", price: 18700 }, // R$ 187 em centavos
   ];
 
@@ -69,24 +70,20 @@ const ServiceOptions = () => {
           return total + (extra ? extra.price : 0);
         }, 0);
 
-      // Se for um extra, não somar o pacote principal
-      const totalAmount = isExtra
-        ? amount // Somente o valor do extra
-        : amount + selectedExtrasTotal; // Valor do pacote + extras
+      const totalAmount = isExtra ? amount : amount + selectedExtrasTotal;
 
-      // Fazendo a requisição para a API do Mercado Pago
       const res = await fetch("/api/mercado-pago", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pacote,
-          valor: totalAmount / 100, // Convertendo para reais
+          valor: totalAmount / 100,
         }),
       });
 
       const data = await res.json();
       if (data.init_point) {
-        window.location.href = data.init_point; // Redireciona para o Mercado Pago
+        window.location.href = data.init_point;
       }
     } catch (error) {
       console.error("Erro no checkout:", error);
@@ -117,21 +114,26 @@ const ServiceOptions = () => {
               ))}
             </ul>
             <p className="text-sm text-gray-300 mb-4">{service.audience}</p>
-            <div className="mt-auto flex justify-between items-center">
+            <div className="mt-auto flex flex-col items-start">
+              {service.originalPrice && (
+                <p className="text-lg text-gray-400 line-through">
+                  De: R$ {(service.originalPrice / 100).toFixed(2)}
+                </p>
+              )}
               <p className="text-xl font-bold text-blue-400">
-                R$ {(parseInt(service.price.toString()) / 100).toFixed(2)}
+                Por: R$ {(service.price / 100).toFixed(2)}
               </p>
-              <button
-                onClick={() => {
-                  setSelectedPackage(service.title);
-                  handleCheckout(parseInt(service.price.toString()), service.title);
-                }}
-                className="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition"
-                disabled={loading}
-              >
-                {loading ? "Carregando..." : "Adquirir"}
-              </button>
             </div>
+            <button
+              onClick={() => {
+                setSelectedPackage(service.title);
+                handleCheckout(service.price, service.title);
+              }}
+              className="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition mt-4"
+              disabled={loading}
+            >
+              {loading ? "Carregando..." : "Adquirir"}
+            </button>
           </div>
         ))}
       </div>
@@ -156,7 +158,7 @@ const ServiceOptions = () => {
               R$ {(extra.price / 100).toFixed(2)}
             </p>
             <button
-              onClick={() => handleCheckout(extra.price, extra.name, true)} // Marcar como extra
+              onClick={() => handleCheckout(extra.price, extra.name, true)}
               className="bg-green-600 text-white py-2 px-6 rounded hover:bg-green-700 transition"
               disabled={loading}
             >
