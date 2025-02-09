@@ -31,9 +31,9 @@ const PaymentFailed = () => {
       <div className="text-center mt-8">
         <button
           className="bg-blue-500 text-white py-2 px-4 rounded"
-          onClick={() => router.push('/')} // Redireciona para a página inicial (ajuste se necessário)
+          onClick={() => router.push('/comprar-pacotes')} // Altere para a rota correta
         >
-          Voltar para a IonKod
+          Voltar para a compra de pacotes
         </button>
       </div>
     </div>
