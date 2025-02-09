@@ -1,3 +1,5 @@
+// pages/page.tsx
+
 import { useEffect } from 'react';
 import { AppProps } from 'next/app'; // Importando o tipo correto
 import '../src/app/globals.css';
