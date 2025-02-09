@@ -1,4 +1,4 @@
-// pages/api/create-checkout-preference.ts
+// src/app/api/create-checkout-preference.ts
 
 
 import { NextApiRequest, NextApiResponse } from "next";

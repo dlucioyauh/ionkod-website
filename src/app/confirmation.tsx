@@ -1,4 +1,4 @@
-// pages/confirmation.tsx
+// src/app/confirmation.tsx
 'use client';
 
 import { useEffect, useState } from 'react';

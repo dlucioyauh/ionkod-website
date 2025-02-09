@@ -17,6 +17,7 @@ const ServiceOptions = () => {
         "Plano de ação personalizado com 3 metas prioritárias",
         "Acesso a templates básicos de organização de agenda",
         "Suporte por e-mail entre sessões",
+        "E-book de receitas-base saudáveis",
       ],
       audience: "Empreendedores iniciantes ou quem busca orientação pontual.",
     },
@@ -28,8 +29,9 @@ const ServiceOptions = () => {
         "Tudo do Pacote Básico +",
         "Análise detalhada de concorrência e posicionamento de mercado",
         "Estratégias de vendas e marketing digital",
-        "Templates premium de gestão de tempo e planilha financeira",
+        "Templates premium de gestão de tempo e planilha de precificação",
         "1 semana de suporte via WhatsApp pós-consultoria",
+        "E-book de receitas-base saudáveis",
       ],
       audience: "Donos de negócios consolidados que querem escalar ou melhorar processos.",
     },
@@ -42,6 +44,8 @@ const ServiceOptions = () => {
         "Acompanhamento mensal por 3 meses (2 sessões extras de 30min)",
         "Elaboração de um Manual do Negócio personalizado",
         "Revisão de portfólio de produtos e dicas para pricing",
+        "App de Precificação de produtos ou landpage de produtos",
+        "E-book de receitas-base saudáveis",
       ],
       audience: "Empresas em fase de expansão ou profissionais que desejam posicionamento premium.",
     },
@@ -53,7 +57,7 @@ const ServiceOptions = () => {
     { name: "Mentoria privada", price: 18700 }, // R$ 187 em centavos
   ];
 
-  const handleCheckout = async (amount: number, pacote: string) => {
+  const handleCheckout = async (amount: number, pacote: string, isExtra: boolean = false) => {
     setLoading(true);
     try {
       const selectedExtrasTotal = Object.keys(selectedExtras)
@@ -63,13 +67,18 @@ const ServiceOptions = () => {
           return total + (extra ? extra.price : 0);
         }, 0);
 
+      // Se for um extra, não somar o pacote principal
+      const totalAmount = isExtra
+        ? selectedExtrasTotal // Somente o valor dos opcionais
+        : amount + selectedExtrasTotal; // Valor do pacote + extras
+
       // Fazendo a requisição para a API do Mercado Pago
       const res = await fetch("/api/mercado-pago", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pacote,
-          valor: (amount + selectedExtrasTotal) / 100, // Convertendo para reais
+          valor: totalAmount / 100, // Convertendo para reais
         }),
       });
 
@@ -145,7 +154,7 @@ const ServiceOptions = () => {
               R$ {(extra.price / 100).toFixed(2)}
             </p>
             <button
-              onClick={() => handleCheckout(extra.price, extra.name)}
+              onClick={() => handleCheckout(extra.price, extra.name, true)} // Marcar como extra
               className="bg-green-600 text-white py-2 px-6 rounded hover:bg-green-700 transition"
               disabled={loading}
             >

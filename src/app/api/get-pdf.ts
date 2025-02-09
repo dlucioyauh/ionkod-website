@@ -1,4 +1,4 @@
-// pages/api/get-pdf.ts
+// src/app/api/get-pdf.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';

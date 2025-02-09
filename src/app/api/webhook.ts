@@ -1,4 +1,4 @@
-// pages/api/webhook.ts
+// src/app/api/mercado-pago/
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
