@@ -1,9 +1,11 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const PaymentFailed = () => {
+const PaymentPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -30,7 +32,7 @@ const PaymentFailed = () => {
       <div className="text-center mt-8">
         <button
           className="bg-blue-500 text-white py-2 px-4 rounded"
-          onClick={() => router.push('/comprar-pacotes')} // Ajuste para a URL correta
+          onClick={() => router.push('/comprar-pacotes')} // Altere para a URL correta da página de compra de pacotes
         >
           Voltar para a compra de pacotes
         </button>
@@ -39,4 +41,4 @@ const PaymentFailed = () => {
   );
 };
 
-export default PaymentFailed;
+export default PaymentPage;
