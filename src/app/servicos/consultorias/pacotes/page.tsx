@@ -1,3 +1,5 @@
+// src/app/servicos/consultorias/pacotes/page.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -52,7 +54,7 @@ const ServiceOptions = () => {
   ];
 
   const optionalExtras = [
-    { name: "E-book de Receitas-Base Saudáveis", price: 19700 }, // R$ 197 em centavos
+    { name: "E-book de Receitas-Base Saudáveis", price: 100 }, // R$ 197 em centavos
     { name: "Auditoria de Redes Sociais", price: 28700 }, // R$ 287 em centavos
     { name: "Mentoria privada", price: 18700 }, // R$ 187 em centavos
   ];
@@ -69,7 +71,7 @@ const ServiceOptions = () => {
 
       // Se for um extra, não somar o pacote principal
       const totalAmount = isExtra
-        ? selectedExtrasTotal // Somente o valor dos opcionais
+        ? amount // Somente o valor do extra
         : amount + selectedExtrasTotal; // Valor do pacote + extras
 
       // Fazendo a requisição para a API do Mercado Pago
