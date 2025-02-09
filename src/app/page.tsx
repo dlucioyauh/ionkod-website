@@ -1,5 +1,3 @@
-// src/app/page.tsx
-
 "use client";
 import { motion } from "framer-motion";
 import { fadeIn } from "@/utils/animations";
@@ -8,6 +6,20 @@ import { useState, useEffect } from "react";
 const HomePage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [particles, setParticles] = useState<{ x: number, y: number }[]>([]);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -32,24 +44,26 @@ const HomePage = () => {
 
   return (
     <motion.div 
-      className="homepage"
+      className="homepage relative"
       initial="hidden"
       animate="visible"
       variants={fadeIn}
     >
-      {/* Fundo dinâmico com animação */}
-      <div
-        className="absolute top-0 left-0 w-full h-full bg-fixed bg-center bg-cover"
-        style={{
-          backgroundImage: "url('/images/Imagemdefundo.webp')",  // Substitua pela sua imagem futurista
-        }}
-      ></div>
+      {/* 🔹 Novo vídeo de fundo */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+      >
+        <source src="/images/Imagemdefundo.mp4" type="video/mp4" />
+      </video>
 
       {/* Partículas interativas */}
       {particles.map((particle, index) => (
         <div
           key={index}
-          className="particle p-absolute"
+          className="particle absolute"
           style={{
             top: `${particle.y}px`,
             left: `${particle.x}px`,
@@ -63,7 +77,7 @@ const HomePage = () => {
       <motion.div
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center"
         animate={{
-          scale: mousePosition.x / window.innerWidth + 0.5,
+          scale: windowWidth ? mousePosition.x / windowWidth + 0.5 : 1,
         }}
         transition={{ type: "spring", stiffness: 200 }}
       >
