@@ -1,17 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const PaymentFailed = () => {
+const PaymentFailedContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Garante que searchParams não seja null, atribuindo uma string vazia caso seja.
-  const collection_id = searchParams?.get('collection_id') ?? '';
-  const collection_status = searchParams?.get('collection_status') ?? '';
-  const payment_id = searchParams?.get('payment_id') ?? '';
-  const status = searchParams?.get('status') ?? '';
+  if (!searchParams) return <p>Carregando...</p>;
+
+  const collection_id = searchParams.get('collection_id') || 'N/A';
+  const collection_status = searchParams.get('collection_status') || 'N/A';
+  const payment_id = searchParams.get('payment_id') || 'N/A';
+  const status = searchParams.get('status') || 'N/A';
 
   return (
     <div className="container mx-auto px-4 py-10">
@@ -22,10 +23,10 @@ const PaymentFailed = () => {
       <div className="text-center mt-6">
         <p>Detalhes do pagamento:</p>
         <ul className="list-disc text-left mt-2">
-          <li>ID da Coleção: {collection_id || 'Não disponível'}</li>
-          <li>Status da Coleção: {collection_status || 'Não disponível'}</li>
-          <li>ID do Pagamento: {payment_id || 'Não disponível'}</li>
-          <li>Status do Pagamento: {status || 'Não disponível'}</li>
+          <li>ID da Coleção: {collection_id}</li>
+          <li>Status da Coleção: {collection_status}</li>
+          <li>ID do Pagamento: {payment_id}</li>
+          <li>Status do Pagamento: {status}</li>
         </ul>
       </div>
       <div className="text-center mt-8">
@@ -37,6 +38,14 @@ const PaymentFailed = () => {
         </button>
       </div>
     </div>
+  );
+};
+
+const PaymentFailed = () => {
+  return (
+    <Suspense fallback={<p>Carregando...</p>}>
+      <PaymentFailedContent />
+    </Suspense>
   );
 };
 
