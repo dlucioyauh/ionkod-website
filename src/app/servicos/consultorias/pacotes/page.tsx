@@ -11,29 +11,29 @@ const ServiceOptions = () => {
 
   const services = [
     {
-      title: "Pacote Básico: Estratégia Inicial",
+      title: "Plano A. Estratégia Inicial",
       price: 118700, // R$ 1187, em centavos
       description: [
-        "4 sessões de 1h cada (online)",
+        "2 sessões de 1h cada (online)",
         "Diagnóstico inicial do negócio do cliente",
         "Plano de ação personalizado com 3 metas prioritárias",
-        "Acesso a templates básicos de organização de agenda",
-        "Suporte por e-mail entre sessões",
-        "E-book de receitas-base saudáveis",
+        "Estratégias de organização de agenda",
+        "Recebimento do material por e-mail",
+        "Até 10 receitas do nosso Cookbook! (aprenda a criar suas próprias receitas)",
+        "Cortesia: Planilha de precificação",
       ],
       audience: "Empreendedores iniciantes ou quem busca orientação pontual.",
     },
     {
-      title: "Pacote Intermediário: Potencializador de Resultados",
+      title: "Intermediário: Potencializador de Resultados",
       price: 248900, // R$ 2489, em centavos
       description: [
-        "5 sessões de 1h30 cada (online)",
+        "3 sessões de 1h30 cada (online)",
         "Tudo do Pacote Básico +",
         "Análise detalhada de concorrência e posicionamento de mercado",
-        "Estratégias de vendas e marketing digital",
-        "Templates premium de gestão de tempo e planilha de precificação",
+        "Estratégias de vendas e marketing",
+        "Personalise seu Cookbook! (aprenda a criar suas próprias receitas)",
         "1 semana de suporte via WhatsApp pós-consultoria",
-        "E-book de receitas-base saudáveis",
       ],
       audience: "Donos de negócios consolidados que querem escalar ou melhorar processos.",
     },
@@ -41,22 +41,22 @@ const ServiceOptions = () => {
       title: "Pacote Premium: Transformação Completa",
       price: 489700, // R$ 4897, em centavos
       description: [
-        "5 sessões de 2h cada (online ou presencial, se viável)",
+        "4 sessões de 2h cada online (Presencial valor a parte)",
         "Tudo do Pacote Intermediário +",
-        "Acompanhamento mensal por 3 meses (2 sessões extras de 30min)",
+        "Acompanhamento mensal por 3 meses",
         "Elaboração de um Manual do Negócio personalizado",
         "Revisão de portfólio de produtos e dicas para pricing",
-        "App de Precificação de produtos ou landpage de produtos",
-        "E-book de receitas-base saudáveis",
+        "Cookbook completo livro de receitas-base saudáveis",
+        "App de Precificação de produtos ou landpage (Parceria IONKOD)",
       ],
       audience: "Empresas em fase de expansão ou profissionais que desejam posicionamento premium.",
     },
   ];
 
   const optionalExtras = [
-    { name: "E-book de Receitas-Base Saudáveis", price: 19700 }, // R$ 197 em centavos
-    { name: "Auditoria de Redes Sociais", price: 28700 }, // R$ 287 em centavos
-    { name: "Mentoria privada", price: 18700 }, // R$ 187 em centavos
+    { name: "Cookbook de Receitas-Base Saudáveis", price: 25700 }, // R$ 197 em centavos
+    { name: "Auditoria Instagram", price: 19700 }, // R$ 287 em centavos
+    { name: "Mentoria privada. A partir de", price: 18700 }, // R$ 187 em centavos
   ];
 
   const handleCheckout = async (amount: number, pacote: string, isExtra: boolean = false) => {
