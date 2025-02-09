@@ -5,24 +5,24 @@ import Link from 'next/link';
 
 const ServicosPage = () => {
   return (
-    <div className="bg-gradient-to-r from-[#1f2937] to-[#71a3c1] text-white min-h-screen flex flex-col items-center justify-center px-10">
-      <h2 className="text-4xl font-bold mb-6">Nossos Serviços</h2>
+    <div className="bg-gradient-to-r from-[#1f2937] to-[#71a3c1] text-white min-h-screen flex flex-col items-center justify-center px-6 py-10">
+      <h2 className="text-5xl font-extrabold mb-8 text-center drop-shadow-lg">Nossos Serviços</h2>
       
-      <div className="space-y-4">
-        <Link href="/servicos/consultorias">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md flex items-center gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
+        <Link href="/servicos/consultorias" className="w-full">
+          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg transform transition-all hover:scale-105 flex items-center justify-center gap-3 text-lg">
             📊 Consultorias
           </button>
         </Link>
         
-        <Link href="/servicos/desenvolvimento-sites">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md flex items-center gap-2">
+        <Link href="/servicos/desenvolvimento-sites" className="w-full">
+          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg transform transition-all hover:scale-105 flex items-center justify-center gap-3 text-lg">
             💻 Desenvolvimento de Sites
           </button>
         </Link>
         
-        <Link href="/servicos/desenvolvimento-apps">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md flex items-center gap-2">
+        <Link href="/servicos/desenvolvimento-apps" className="w-full">
+          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg transform transition-all hover:scale-105 flex items-center justify-center gap-3 text-lg">
             📱 Desenvolvimento de Apps
           </button>
         </Link>

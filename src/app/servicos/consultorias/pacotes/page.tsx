@@ -10,7 +10,7 @@ const ServiceOptions = () => {
   const services = [
     {
       title: "Pacote Básico: Estratégia Inicial",
-      price: 118700, // R$ 1,19 em centavos
+      price: 118700, // R$ 1187, em centavos
       description: [
         "4 sessões de 1h cada (online)",
         "Diagnóstico inicial do negócio do cliente",
@@ -22,7 +22,7 @@ const ServiceOptions = () => {
     },
     {
       title: "Pacote Intermediário: Potencializador de Resultados",
-      price: 248900, // R$ 2,49 em centavos
+      price: 248900, // R$ 2489, em centavos
       description: [
         "5 sessões de 1h30 cada (online)",
         "Tudo do Pacote Básico +",
@@ -35,7 +35,7 @@ const ServiceOptions = () => {
     },
     {
       title: "Pacote Premium: Transformação Completa",
-      price: 489700, // R$ 4,90 em centavos
+      price: 489700, // R$ 4897, em centavos
       description: [
         "5 sessões de 2h cada (online ou presencial, se viável)",
         "Tudo do Pacote Intermediário +",
@@ -48,9 +48,9 @@ const ServiceOptions = () => {
   ];
 
   const optionalExtras = [
-    { name: "E-book de Receitas-Base Saudáveis", price: 19700 }, // R$ 1,97 em centavos
-    { name: "Auditoria de Redes Sociais", price: 28700 }, // R$ 2,87 em centavos
-    { name: "Mentoria privada", price: 18700 }, // R$ 1,87 em centavos
+    { name: "E-book de Receitas-Base Saudáveis", price: 19700 }, // R$ 197 em centavos
+    { name: "Auditoria de Redes Sociais", price: 28700 }, // R$ 287 em centavos
+    { name: "Mentoria privada", price: 18700 }, // R$ 187 em centavos
   ];
 
   const handleCheckout = async (amount: number, pacote: string) => {
