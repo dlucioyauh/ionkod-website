@@ -1,45 +1,42 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-// import { criarPreferenciaMercadoPago } from '@/lib/mercadopago';
+import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function PaymentPageContent() {
+const PaymentFailed = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const pacote = searchParams?.get('pacote') || '';
-  const valor = searchParams?.get('valor') || '';
 
-  useEffect(() => {
-    if (pacote && valor) {
-      const processarPagamento = async () => {
-        try {
-          const response = await fetch('/api/mercado-pago', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ pacote, valor: parseFloat(valor) }),
-          });
-
-          if (!response.ok) {
-            throw new Error('Erro ao processar o pagamento.');
-          }
-
-          const { init_point } = await response.json();
-          window.location.href = init_point; // Redireciona para o Mercado Pago
-        } catch (error) {
-          console.error('Erro ao processar o pagamento:', error);
-          alert('Erro ao processar o pagamento. Tente novamente.');
-        }
-      };
-
-      processarPagamento();
-    }
-  }, [pacote, valor]);
+  const collection_id = searchParams?.get('collection_id') || 'N/A';
+  const collection_status = searchParams?.get('collection_status') || 'N/A';
+  const payment_id = searchParams?.get('payment_id') || 'N/A';
+  const status = searchParams?.get('status') || 'N/A';
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Redirecionando para o pagamento...</h1>
+    <div className="container mx-auto px-4 py-10">
+      <h1 className="text-3xl font-bold text-center mb-6">Pagamento Não Autorizado</h1>
+      <p className="text-center text-lg mb-4">
+        O pagamento não foi autorizado. Tente novamente ou entre em contato com o suporte.
+      </p>
+      <div className="text-center mt-6">
+        <p>Detalhes do pagamento:</p>
+        <ul className="list-disc text-left mt-2">
+          <li>ID da Coleção: {collection_id}</li>
+          <li>Status da Coleção: {collection_status}</li>
+          <li>ID do Pagamento: {payment_id}</li>
+          <li>Status do Pagamento: {status}</li>
+        </ul>
+      </div>
+      <div className="text-center mt-8">
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded"
+          onClick={() => router.push('/comprar-pacotes')} // Ajuste para a URL correta
+        >
+          Voltar para a compra de pacotes
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default PaymentFailed;
