@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'O campo "valor" deve ser um número maior que zero.' }, { status: 400 });
     }
 
+    // Criação da preferência de pagamento
     const preference = {
       items: [
         {
@@ -42,12 +43,13 @@ export async function POST(req: NextRequest) {
       statement_descriptor: 'IONKOD CONSULTORIA',
     };
 
+    // Realiza a requisição para criar a preferência de pagamento
     const response = await axios.post<MercadoPagoResponse>(
       'https://api.mercadopago.com/checkout/preferences',
       preference,
       {
         headers: {
-          Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`, // Usando o token de produção
           'Content-Type': 'application/json',
         },
       }
