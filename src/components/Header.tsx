@@ -1,21 +1,29 @@
-// src/components/Header.tsx
-import Link from "next/link";
-import Image from "next/image";
-
-export default function Header() {
-  return (
-    <header className="bg-white shadow-md fixed w-full z-10">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Image src="/logo.png" alt="IonKod Logo" width={150} height={50} />
-        <nav>
-          <ul className="flex space-x-6">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/about">Sobre</Link></li>
-            <li><Link href="/services">Serviços</Link></li>
-            <li><Link href="/contact">Contato</Link></li>
-          </ul>
+<header className="fixed top-0 left-0 right-0 z-50 bg-transparent p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="text-2xl font-bold text-white">
+          <span className="text-blue-500">techno</span>IT
+        </div>
+        
+        <nav className="space-x-6 text-white">
+          <Link href="/" className="hover:text-blue-500">Home</Link>
+          <Link href="/services" className="hover:text-blue-500">Services</Link>
+          <Link href="/portfolio" className="hover:text-blue-500">Portfolio</Link>
+          <Link href="/testimonials" className="hover:text-blue-500">Testimonials</Link>
+          <Link href="/team" className="hover:text-blue-500">Team</Link>
+          <Link href="/news" className="hover:text-blue-500">News</Link>
+          
+          <button className="bg-blue-500 px-4 py-2 rounded-full hover:bg-blue-600">
+            Get Quotes
+          </button>
+          
+          <button 
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className="ml-2"
+          >
+            {isDarkMode ? '🌞' : '🌙'}
+          </button>
         </nav>
       </div>
     </header>
-  );
-} 
+  )
+}
