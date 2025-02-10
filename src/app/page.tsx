@@ -4,22 +4,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { fadeIn } from "@/utils/animations";
+import { fadeIn } from "@/utils/animations";  // Supondo que este seja o caminho correto
+import dynamic from "next/dynamic";
 
 const HomePage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isClient, setIsClient] = useState(false); // Adicionar um estado para verificar se é no cliente
+  const [isClient, setIsClient] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") { // Verifica se estamos no cliente
-      setIsClient(true); // Atualiza o estado para permitir o uso de `window`
+    if (typeof window !== "undefined") {
+      setIsClient(true);  // Permite o uso de "window" no cliente
     }
   }, []);
 
   useEffect(() => {
-    if (!isClient) return; // Se não for no cliente, não executa o código abaixo
-
+    if (!isClient) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -60,7 +60,7 @@ const HomePage = () => {
     };
 
     animate();
-  }, [isClient]); // Adicionando dependência do estado `isClient`
+  }, [isClient]);
 
   return (
     <motion.div
