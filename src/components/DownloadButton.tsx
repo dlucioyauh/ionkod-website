@@ -1,4 +1,7 @@
-import { useState } from 'react';
+// src/components/DownloadButton.tsx
+"use client";
+
+import { useState } from "react";
 
 const DownloadButton = () => {
   const [loading, setLoading] = useState(false);
@@ -7,21 +10,23 @@ const DownloadButton = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/get-pdf');
+      const response = await fetch("/api/get-pdf");
 
       if (response.status === 200) {
         const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Aula+01+Inaugural.pdf';
-        a.click();
-        window.URL.revokeObjectURL(url);
+        if (typeof window !== "undefined") {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "Aula+01+Inaugural.pdf";
+          a.click();
+          window.URL.revokeObjectURL(url);
+        }
       } else {
-        alert('Você precisa pagar para acessar o PDF.');
+        alert("Você precisa pagar para acessar o PDF.");
       }
     } catch {
-      alert('Erro ao tentar baixar o PDF. Tente novamente.');
+      alert("Erro ao tentar baixar o PDF. Tente novamente.");
     }
 
     setLoading(false);
@@ -33,7 +38,7 @@ const DownloadButton = () => {
       disabled={loading}
       className="bg-blue-500 text-white p-3 rounded"
     >
-      {loading ? 'Baixando...' : 'Baixar PDF'}
+      {loading ? "Baixando..." : "Baixar PDF"}
     </button>
   );
 };

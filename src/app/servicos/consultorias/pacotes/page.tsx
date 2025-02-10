@@ -82,7 +82,7 @@ const ServiceOptions = () => {
       });
 
       const data = await res.json();
-      if (data.init_point) {
+      if (typeof window !== "undefined" && data.init_point) {
         window.location.href = data.init_point;
       }
     } catch (error) {

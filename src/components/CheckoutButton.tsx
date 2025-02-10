@@ -1,41 +1,39 @@
 // src/components/CheckoutButton.tsx
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { useState } from 'react';
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useState } from "react";
 
 const CheckoutButton = ({ pacote, valor }: { pacote: string; valor: number }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handlePayment = async () => {
-    setIsLoading(true); // Desabilita o botão durante o processamento
+    setIsLoading(true);
 
     try {
-      // Envia os dados para a API do Mercado Pago
-      const response = await fetch('/api/mercado-pago', {
-        method: 'POST',
+      const response = await fetch("/api/mercado-pago", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ pacote, valor }),
       });
 
-      // Verifica se a resposta foi bem-sucedida
       if (!response.ok) {
-        throw new Error('Erro ao processar o pagamento.');
+        throw new Error("Erro ao processar o pagamento.");
       }
 
-      // Extrai o link de redirecionamento do Mercado Pago
       const { init_point } = await response.json();
 
-      // Redireciona para o checkout do Mercado Pago
-      window.location.href = init_point;
+      if (typeof window !== "undefined") {
+        window.location.href = init_point;
+      }
     } catch (error) {
-      console.error('Erro ao processar o pagamento:', error);
-      alert('Erro ao processar o pagamento. Tente novamente.');
+      console.error("Erro ao processar o pagamento:", error);
+      alert("Erro ao processar o pagamento. Tente novamente.");
     } finally {
-      setIsLoading(false); // Reabilita o botão
+      setIsLoading(false);
     }
   };
 
@@ -44,10 +42,10 @@ const CheckoutButton = ({ pacote, valor }: { pacote: string; valor: number }) =>
       <button
         onClick={handlePayment}
         className="btn flex items-center gap-2"
-        disabled={isLoading} // Desabilita o botão durante o carregamento
+        disabled={isLoading}
       >
         <Image src="/images/passarinho.png" alt="Símbolo" width={30} height={30} />
-        {isLoading ? 'Processando...' : 'Adquira a Consultoria'}
+        {isLoading ? "Processando..." : "Adquira a Consultoria"}
       </button>
     </motion.div>
   );
