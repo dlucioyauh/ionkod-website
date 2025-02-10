@@ -2,7 +2,10 @@
 
 "use client";
 
-import { Particles } from "@tsparticles/react";
+import dynamic from "next/dynamic";
+
+// Carrega o componente Particles dinamicamente, desabilitando SSR
+const Particles = dynamic(() => import("@tsparticles/react"), { ssr: false });
 
 const ParticlesBackground = () => {
   return (

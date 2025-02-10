@@ -1,23 +1,36 @@
-//src/app/page.tsx
+// src/app/page.tsx
 
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { fadeIn } from "@/utils/animations";  // Supondo que este seja o caminho correto
-import dynamic from "next/dynamic";
+import { fadeIn } from "@/utils/animations"; // Supondo que este seja o caminho correto
 
 const HomePage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isClient, setIsClient] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // Verifica se o código está sendo executado no cliente
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsClient(true);  // Permite o uso de "window" no cliente
+      setIsClient(true);
     }
   }, []);
 
+  // Atualiza a posição do mouse
+  useEffect(() => {
+    if (!isClient) return;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [isClient]);
+
+  // Configura o canvas e as partículas
   useEffect(() => {
     if (!isClient) return;
     const canvas = canvasRef.current;
@@ -76,20 +89,22 @@ const HomePage = () => {
       ></canvas>
 
       {/* 🔹 Conteúdo Principal */}
-      <motion.div
-        className="text-center z-10"
-        animate={{
-          scale: mousePosition.x / window.innerWidth + 0.5,
-        }}
-        transition={{ type: "spring", stiffness: 200 }}
-      >
-        <h1 className="text-4xl font-bold text-white mb-4">
-          Bem-vindo ao <span className="text-yellow-500">IonKod!</span>
-        </h1>
-        <p className="text-lg text-gray-100">
-          Adquira conhecimento prático e transforme sua carreira.
-        </p>
-      </motion.div>
+      {isClient && ( // Renderiza apenas no cliente
+        <motion.div
+          className="text-center z-10"
+          animate={{
+            scale: mousePosition.x / window.innerWidth + 0.5,
+          }}
+          transition={{ type: "spring", stiffness: 200 }}
+        >
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Bem-vindo ao <span className="text-yellow-500">IonKod!</span>
+          </h1>
+          <p className="text-lg text-gray-100">
+            Adquira conhecimento prático e transforme sua carreira.
+          </p>
+        </motion.div>
+      )}
     </motion.div>
   );
 };
