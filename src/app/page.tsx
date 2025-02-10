@@ -1,3 +1,5 @@
+//src/app/page.tsx
+
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -6,9 +8,18 @@ import { fadeIn } from "@/utils/animations";
 
 const HomePage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isClient, setIsClient] = useState(false); // Adicionar um estado para verificar se é no cliente
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined") { // Verifica se estamos no cliente
+      setIsClient(true); // Atualiza o estado para permitir o uso de `window`
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return; // Se não for no cliente, não executa o código abaixo
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -18,8 +29,7 @@ const HomePage = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const particles: { x: number; y: number; size: number; speed: number }[] =
-      [];
+    const particles: { x: number; y: number; size: number; speed: number }[] = [];
 
     for (let i = 0; i < 50; i++) {
       particles.push({
@@ -50,7 +60,7 @@ const HomePage = () => {
     };
 
     animate();
-  }, []);
+  }, [isClient]); // Adicionando dependência do estado `isClient`
 
   return (
     <motion.div
