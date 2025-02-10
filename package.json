@@ -18,6 +18,7 @@
     "framer-motion": "^12.4.0",
     "mercadopago": "^2.3.0",
     "next-auth": "^4.24.10",
+    "particles.js": "^2.0.0",
     "prisma": "^5.22.0",
     "react-tsparticles": "^2.12.2",
     "stripe": "^17.4.0",
