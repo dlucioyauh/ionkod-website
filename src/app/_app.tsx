@@ -1,8 +1,8 @@
-// pages/page.tsx
-
+// src/app/_app.tsx
 import { useEffect } from 'react';
 import { AppProps } from 'next/app'; // Importando o tipo correto
 import '../src/app/globals.css';
+import Footer from '../components/Footer'; // Importe o Footer
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -17,7 +17,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, []);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Component {...pageProps} />
+      <Footer /> {/* Rodapé adicionado após a renderização da página */}
+    </>
+  );
 }
 
 export default MyApp;
