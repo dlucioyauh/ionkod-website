@@ -131,3 +131,28 @@ img {
         font-size: 16px;
     }
 }
+
+/* globals.css */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#__next {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garantir que ocupe toda a altura da página */
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    width: 100%;
+}
