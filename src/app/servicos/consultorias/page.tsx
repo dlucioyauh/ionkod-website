@@ -7,7 +7,9 @@ import { motion } from 'framer-motion';
 
 export default function Consultorias() {
   return (
-    <main className="flex flex-col items-start justify-center min-h-screen bg-gray-900 text-white p-6">
+    <main className="flex flex-col items-start justify-center min-h-screen text-white p-6"
+      style={{ background: 'linear-gradient(to right, #1f2937 0%, #71a3c1 100%)' }}
+    >
       <h1 className="text-4xl font-bold mb-8">Consultorias</h1>
 
       <section className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">

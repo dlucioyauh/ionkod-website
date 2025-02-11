@@ -1,27 +1,61 @@
+// src/app/sobre/page.tsx
+'use client';
+
+import Image from 'next/image';
+
 export default function Sobre() {
   return (
-    <div className="container mx-auto p-6 text-white">
-      <h1 className="text-3xl font-bold text-center">Sobre a IonKod</h1>
-      <p className="mt-4 text-lg">
-        IonKod atua no setor de Tecnologia, Inovação e Desenvolvimento de Soluções Tecnológicas.
-        Nossa missão é unir o poder da inovação tecnológica com os princípios atemporais da espiritualidade,
-        criando soluções que transcendem o presente e moldam o futuro.
-      </p>
-      <h2 className="text-2xl font-semibold mt-6">1. Essência do Nome</h2>
-      <p className="mt-2">IonKod é uma fusão de dois conceitos-chave:</p>
-      <ul className="list-disc pl-6 mt-2">
-        <li><strong>Íon:</strong> Representa energia, movimento e inovação, simbolizando evolução contínua.</li>
-        <li><strong>Kod:</strong> Derivado de &quot;Kodesh&quot; (sagrado em hebraico), remete à pureza e valores éticos.</li>
-      </ul>
-      <h2 className="text-2xl font-semibold mt-6">2. Inovação com Propósito</h2>
-      <p className="mt-2">
-        Nossa filosofia é criar soluções tecnológicas que respeitam valores fundamentais e possuem um propósito maior.
-      </p>
-      <h2 className="text-2xl font-semibold mt-6">3. Visão para o Futuro</h2>
-      <p className="mt-2">
-        A IonKod acredita que cada inovação é uma página aberta no &quot;livro selado&quot; do futuro.
-        Estamos comprometidos em explorar os mistérios e trazer à tona novas tecnologias e soluções inovadoras.
-      </p>
-    </div>
+    <main className="flex flex-col items-center justify-center min-h-screen text-white px-6 py-12"
+      style={{ background: 'linear-gradient(to right, #1f2937 0%, #71a3c1 100%)' }}
+    >
+      <section className="w-full max-w-5xl text-center">
+        <h1 className="text-5xl font-bold mb-6">Sobre a IonKod</h1>
+
+        <div className="relative w-full h-64 mb-8">
+          <Image
+            src="/images/7.png"
+            alt="Equipe IonKod"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg shadow-lg"
+          />
+        </div>
+
+        <p className="text-lg mb-4">
+          A <strong>IonKod</strong> é uma empresa em fase de crescimento, especializada em
+          <strong> desenvolvimento de software, criação de sites e integração de sistemas</strong>.
+        </p>
+
+        <p className="text-lg mb-4">
+          Estamos evoluindo para nos tornar uma <strong>plataforma digital completa</strong>, 
+          que oferecerá vídeos, palestras e consultorias para impulsionar negócios e inovação.
+        </p>
+
+        <p className="text-lg mb-6">
+          Nosso compromisso é <strong>transformar ideias em soluções tecnológicas</strong>, 
+          ajudando empresas e profissionais a crescerem com eficiência e qualidade.
+        </p>
+      </section>
+
+      <section className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-between bg-gray-800 p-6 rounded-lg shadow-lg mt-8">
+        <div className="text-center md:text-left mb-6 md:mb-0">
+          <h2 className="text-3xl font-semibold">Nosso Propósito</h2>
+          <p className="text-lg mt-4">
+            Criar soluções inovadoras que conectam pessoas e tecnologia, 
+            proporcionando resultados estratégicos para nossos clientes.
+          </p>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-4">
+          <button className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">
+            Conheça Nossos Serviços
+          </button>
+
+          <button className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition">
+            Entre em Contato
+          </button>
+        </div>
+      </section>
+    </main>
   );
 }

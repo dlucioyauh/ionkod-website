@@ -1,4 +1,4 @@
-// src/components/ParticlesBackground.tsx
+// src/utils/ParticlesBackground.tsx
 
 "use client";
 
@@ -9,60 +9,65 @@ const Particles = dynamic(() => import("@tsparticles/react"), { ssr: false });
 
 const ParticlesBackground = () => {
   return (
-    <Particles
-      id="tsparticles"
-      options={{
-        background: {
-          color: {
-            value: "#1f2937", // Cor de fundo
-          },
-        },
-        particles: {
-          number: {
-            value: 100, // Número de partículas
-            density: {
-              enable: true,
-              value_area: 800, // Propriedade correta para densidade
-            } as { enable: boolean; value_area: number }, // Type assertion
-          },
-          shape: {
-            type: "circle", // Formato das partículas
-          },
-          opacity: {
-            value: 0.5, // Opacidade das partículas
-          },
-          size: {
-            value: { min: 1, max: 5 }, // Tamanho das partículas
-          },
-          move: {
-            enable: true, // Habilita movimento
-            speed: 2, // Velocidade do movimento
-            direction: "none", // Direção do movimento
-            outModes: "out", // Comportamento ao sair da tela
-          },
-        },
-        interactivity: {
-          events: {
-            onHover: {
-              enable: true, // Interatividade ao passar o mouse
-              mode: "repulse", // Modo de repulsão
-            },
-            onClick: {
-              enable: true, // Interatividade ao clicar
-              mode: "push", // Modo de empurrar
+    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: -1 }}>
+      <Particles
+        id="tsparticles"
+        options={{
+          background: {
+            color: {
+              value: "#1f2937", // Cor de fundo
             },
           },
-          modes: {
-            repulse: {
-              distance: 100, // Distância de repulsão
+          particles: {
+            number: {
+              value: 100, // Número de partículas
+              density: {
+                enable: true,
+                value_area: 800, // Usando "value_area" com type assertion
+              } as { enable: boolean; value_area: number }, // Type assertion
             },
-            push: {
-              quantity: 4, // Quantidade de partículas ao empurrar
+            color: {
+              value: "#ffffff", // Cor das partículas
+            },
+            shape: {
+              type: "circle", // Formato das partículas
+            },
+            opacity: {
+              value: 0.5, // Opacidade das partículas
+            },
+            size: {
+              value: 3, // Tamanho das partículas (valor único)
+            },
+            move: {
+              enable: true, // Habilita movimento
+              speed: 2, // Velocidade do movimento
+              direction: "none", // Direção do movimento
+              outModes: "out", // Comportamento ao sair da tela
             },
           },
-        },
-      }}
-    />
+          interactivity: {
+            events: {
+              onHover: {
+                enable: true, // Habilita interação ao passar o mouse
+                mode: "repulse", // Modo de interação (repulsão)
+              },
+              onClick: {
+                enable: true, // Habilita interação ao clicar
+                mode: "push", // Modo de interação (empurrar)
+              },
+            },
+            modes: {
+              repulse: {
+                distance: 100, // Distância de repulsão
+              },
+              push: {
+                quantity: 4, // Quantidade de partículas ao empurrar
+              },
+            },
+          },
+        }}
+      />
+    </div>
   );
 };
 

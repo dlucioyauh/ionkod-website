@@ -1,11 +1,12 @@
 // src/app/servicos/page.tsx
+
 'use client';
 
 import Link from 'next/link';
 
 const ServicosPage = () => {
   return (
-    <div className="bg-gradient-to-r from-[#1f2937] to-[#71a3c1] text-white min-h-screen flex flex-col items-center justify-center px-6 py-10">
+    <div className="gradient-bg text-white min-h-screen flex flex-col items-center justify-center px-6 py-10">
       <h2 className="text-5xl font-extrabold mb-8 text-center drop-shadow-lg">Nossos Serviços</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
